@@ -1,10 +1,12 @@
-# **API RESTful Grupo 2**
+# **API RESTful - PreEntrega 3 - Grupo 2**
 
-Este proyecto es una API RESTful para gestionar una colección de películas utilizando Node.js, Express y Mysql.
+Este proyecto tiene como objetivo desarrollar una plataforma de streaming mediante el uso de Node.js y MySQL, siguiendo el modelo de datos presentado en el archivo trailerflix.json(tp2).
+
+
 
 
 ## Tabla de Contenidos
-- [**API RESTful Grupo 2**](#api-restful-grupo-2)
+- [**API RESTful - PreEntrega 3 - Grupo 2**](#api-restful---preentrega-3---grupo-2)
   - [Tabla de Contenidos](#tabla-de-contenidos)
   - [Integrantes del grupo de trabajo](#integrantes-del-grupo-de-trabajo)
   - [Configuraciones iniciales](#configuraciones-iniciales)
@@ -46,31 +48,37 @@ npm run dev
 
 ## Endpoints
 
-| Método | URL                        | Descripción                                                                 | Parámetros                                    | Cuerpo de la Solicitud                      |
-|--------|----------------------------|-----------------------------------------------------------------------------|----------------------------------------------|---------------------------------------------|
-| GET    | `/`                        | Retorna un mensaje de bienvenida                                            | N/A                                          | N/A                                         |
-| GET    | `/computadoras`            | Retorna todos los productos                                                 | N/A                                          | N/A                                         |
-| GET    | `/computadoras/:codigo`    | Retorna un producto específico por su código                                | `codigo`: código del producto                | N/A                                         |
-| GET    | `/computadoras/search`     | Retorna productos cuyo nombre y/o categoría coincida o contenga el/los parámetro/s especificado/s | `nombre`: Nombre del producto, `categoría`: Categoría del producto | N/A         |
-| GET    | `/computadoras/precio/:precio` | Retorna productos cuyo precio es igual o mayor al precio especificado       | `precio`: Precio del producto                | N/A                                         |
-| POST   | `/computadoras`            | Crea un nuevo producto                                                      | N/A                                          | Producto en formato JSON*                   |
-| PUT    | `/computadoras/:codigo`    | Actualiza un producto existente por su código                               | `codigo`: Código del producto                | Datos del producto en formato JSON*         |
-| DELETE | `/computadoras/:codigo`    | Elimina un producto existente por su código                                 | `codigo`: Código del producto                | N/A                                         |
+
+| Método | URL                                      | Descripción                                                              | Parámetros                                      | Cuerpo de la Solicitud                  |
+|--------|------------------------------------------|--------------------------------------------------------------------------|------------------------------------------------|-----------------------------------------|
+| GET    | `/api/trailerflix/`                      | Muestra todos los títulos de las películas y series                      | N/A                                            | N/A                                     |
+| GET    | `/api/trailerflix/actores`               | Muestra actrices/actores y sus trabajos fílmicos                         | N/A                                            | N/A                                     |
+| GET    | `/api/trailerflix/:nombre`               | Filtra por películas o series específicas que incluyan el parámetro      | `nombre`: Título de película o serie            | N/A                                     |
+| GET    | `/api/trailerflix/calificacion`          | Devuelve todos los títulos con una calificación mayor a 5                | N/A                                            | N/A                                     |
+| GET    | `/api/trailerflix/categoria/:categoria`  | Filtra todos los títulos por categoría (serie/película)                  | `categoria`: 1: Serie o 2: Película            | N/A                                     |
+| GET    | `/api/trailerflix/actor/todos`           | Muestra todos los actores                                                | N/A                                            | N/A                                     |
+| GET    | `/api/trailerflix/actor/:nombre`         | Filtra por actor y muestra todos sus títulos                             | `nombre`: Nombre del actor                      | N/A                                     |
+| POST   | `/api/trailerflix/`                      | Inserta un nuevo título                                                  | N/A                                            | Producto en formato JSON*               |
+| PUT    | `/api/trailerflix/:id`                   | Actualiza una película o serie con el ID indicado                        | `id`: ID de la película o serie                 | Datos del producto en formato JSON*     |
+| DELETE | `/api/trailerflix/:id`                   | Elimina una película o serie existente por su ID                         | `id`: ID de la película o serie                 | N/A                                     |
+| DELETE | `/api/trailerflix/`                      | Elimina todas las películas o series existentes                         | N/A                                            | N/A                                     |
+
 
 
 ___*Ejemplos de código para el body:___ 
    ```json
    //POST: para agregar un nuevo producto
 {
-    "codigo": 1234,
-    "nombre": "Mega Desk",
-    "precio": 50000,
-    "categoria": "Desktop"
+    "nombre_titulo": "prueba3",
+    "id_categoria": 1,
+    "id_genero": 3,
+    "temporadas": 4,
+    "calificacion": 6
   }
 
   //PUT: para modificar, por ejemplo, el precio del producto.
   {
-     "precio": 75000
+     "calificacion": 10
   }
 ```
 ## Ejemplos de uso
@@ -104,4 +112,8 @@ DELETE -> http://localhost:3000/computadoras/1234
 - 500: Error al conectarse a MongoDB
 - 404: Producto no encontrado
 - 400: Error en el formato de los datos (parámetros, body)
+
+
+
+
 
