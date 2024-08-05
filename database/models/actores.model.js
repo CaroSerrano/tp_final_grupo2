@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, Sequelize, DataTypes) => {
     const Actor = sequelize.define(
       "actor", // Model name

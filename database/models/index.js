@@ -1,6 +1,7 @@
+//Importamos 
 const { Sequelize, DataTypes, Op } = require("sequelize");
 const { database } = require('../../config/config.js');
-
+//Inicia una nueva instancia de Sequelize con los detalles de configuración proporcionados
 const sequelize = new Sequelize(
     database.DB_NAME,
     database.DB_USER,
@@ -18,7 +19,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.Op = Op;
 db.sequelize = sequelize;
-// incializo las tablas
+
+// Carga los modelos de las tablas
 db.title = require("./titulo.model.js")(sequelize, Sequelize, DataTypes);
 db.category = require("./categoria.model.js")(sequelize, Sequelize, DataTypes);
 db.actor = require("./actores.model.js")(sequelize, Sequelize, DataTypes);

@@ -28,12 +28,21 @@ Este proyecto tiene como objetivo desarrollar una plataforma de streaming median
 ## Configuraciones iniciales
 - Detalle de las variables de entorno del archivo .env:
 ```
-PORT=3000
-MONGO_URL_STRING=mongodb+srv://vivianaaguilera15:IngeniasVivi2024@clusteringenias.chsesoe.mongodb.net/?retryWrites=true&w=majority&appName=ClusterIngenias
+PORT: process.env.PORT || "3001",
+
+    /** DATABASE */
+    database: {
+      DB_HOST: process.env.DB_HOST || 'localhost',
+      DB_USER: process.env.DB_USER || 'root',
+      DB_PASS: process.env.DB_PASS || '123456',
+      DB_NAME: process.env.DB_NAME || 'trailerflix',
+      DB_PORT: process.env.DB_PORT || 3306,
+      dialect: "mysql"
+  }
 ```
 - Instalación de dependencias:
 ```bash
-npm install
+npm install sequelize-mysql2-dotenv-express
 ```
 
 ## Uso
@@ -44,7 +53,7 @@ npm run dev
 ```
 2. Acceder a la url del servidor de la forma que creas más conveniente. Recomendamos el uso de Thunder Client.
    
-   http://localhost:3000
+   http://localhost:3001
 
 ## Endpoints
 
