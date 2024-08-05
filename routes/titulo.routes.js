@@ -9,7 +9,7 @@ module.exports = app => {
     // Obtengo todos los titulos GET
     router.get("/", titleController.findAll);
   
-    // Obtengo todos los títulos con una calificación mayor a 5.⭐⭐⭐⭐⭐ GET
+    // Obtengo todos los títulos con una calificación mayor a 5.⭐⭐⭐⭐⭐🐞 GET
     router.get("/calificacion", titleController.findAllCalificacion);
   
     // Obtengo un título específico por nombre.GET
