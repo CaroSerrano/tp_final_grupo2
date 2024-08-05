@@ -14,7 +14,7 @@ const sequelize = new Sequelize(database.DB_NAME, database.DB_USER , database.DB
 async function connect(){
     try {
         await sequelize.authenticate();
-        console.log('La coneccion se ha establecido correctamente.');
+        console.log('La conexión se ha establecido correctamente.');
         } catch (error) {
         console.error('No se puede conectar a la base de datos:', error);
         }
@@ -25,7 +25,7 @@ async function disconnect(){
         await sequelize.authenticate();
         console.log('Cerrar conexion.');
         } catch (error) {
-        console.error('No se puede cerrar la coneccion con la base de datos:', error);
+        console.error('No se puede cerrar la conexión con la base de datos:', error);
         }
 } 
 //Exportación y Ejecución de Funciones
