@@ -1,8 +1,9 @@
+//Importamos el modelo title y el operador
 const db = require("../database/models");
 const Title = db.title;
 const Op = db.Op;
 
-// Crear y guardar un nuevo título
+// Crea y guarda un nuevo titulo
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.nombre_titulo) {
@@ -21,7 +22,7 @@ exports.create = (req, res) => {
     calificacion: req.body.calificacion,
   };
 
-  // Guardar el título en la BBDD
+  // Guarda los titulos en la bd
   Title.create(title)
     .then((data) => {
       res.send(data);
@@ -33,7 +34,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Muestra todos los títulos
+// Recupera todos los títulos de la bd incluyendo las categorías, géneros y actores asociados a los títulos.
 exports.findAll = (req, res) => {
   Title.findAll({
     include: [
@@ -57,7 +58,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Busca uno o más títulos mediante el nombre
+// Busca títulos por nombre incluyendo las categorías, géneros y actores asociados a esos títulos.
 exports.findName = (req, res) => {
   const nombre = req.params.nombre;
   var condition = nombre
@@ -86,7 +87,7 @@ exports.findName = (req, res) => {
     });
 };
 
-//Buscar todos los títulos pertenecientes a la categoría indicada por parámetro (1: Series, 2: Películas)
+//Esta función busca los títulos por categoría.
 exports.findCategory = (req, res) => {
   const categoria = parseInt(req.params.categoria);
   Title.findAll({
@@ -112,7 +113,9 @@ exports.findCategory = (req, res) => {
     });
 };
 
-// Actualiza un título mediante su id
+
+
+// Actualiza un título en la bd con los datos proporcionados en la solicitud.
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -137,7 +140,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Elimina un título mediante su id
+// Elimina un título de la bd usando el ID proporcionado en la solicitud.
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -162,7 +165,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// Elimina todos los títulos de la BBDD
+// Elimina todos los títulos de la bd.
 exports.deleteAll = (req, res) => {
   Title.destroy({
     where: {},
@@ -178,7 +181,7 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// Buscar todos los títulos con una calificación > 5, ordenados de forma descendente
+// Busca todos los títulos los cuales tengan una calificación mayor que 5⭐⭐⭐⭐⭐.
 exports.findAllCalificacion = (req, res) => {
   let condition = { calificacion: { [Op.gt]: 5 } };
 

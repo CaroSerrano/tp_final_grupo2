@@ -3,30 +3,31 @@ module.exports = app => {
   
     const router = require("express").Router();
   
-    // Crear un nuevo título
+    // Crea un nuevo titulo POST
     router.post("/", titleController.create);
   
-    // Mostrar todos los títulos
+    // Obtengo todos los titulos GET
     router.get("/", titleController.findAll);
   
-    // Mostrar todos los títulos con una calificación >5
+    // Obtengo todos los títulos con una calificación mayor a 5.⭐⭐⭐⭐⭐ GET
     router.get("/calificacion", titleController.findAllCalificacion);
   
-    // Mostrar el o los títulos cuyo nombre coincida con el especificado
+    // Obtengo un título específico por nombre.GET
     router.get("/:nombre", titleController.findName);
 
-    // Mostrar los títulos cuya categoría coincida con la especificada
+    //Obtengo títulos por categoría.GET
     router.get("/categoria/:categoria", titleController.findCategory);
   
-    // Actualizar un título mediante su id
+    // Actualizar un título específico por ID. PUT
     router.put("/:id", titleController.update);
-  
-    // Eliminar un título mediante su id
+   
+    // Elimina un título específico por ID. DELETE
     router.delete("/:id", titleController.delete);
   
-    // Eliminar todos lo títulos
+    // Elimina todos los títulos.DELETE
     router.delete("/", titleController.deleteAll);
   
+    //Registramos las rutas
     app.use("/api/trailerflix", router);
   };
   

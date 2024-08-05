@@ -4,13 +4,12 @@ module.exports = app => {
     const router = require("express").Router();
   
   
-    // traigo todos los actores
+    // Obtengo todos los actores
     router.get("/todos", actorController.findAll);
   
-     
-    // traigo  actor por nombre
+     // Obtengo un actor por nombre
     router.get("/:nombre", actorController.findName);
   
-   
+   // Registro la ruta
     app.use("/api/trailerflix/actor", router);
   };
