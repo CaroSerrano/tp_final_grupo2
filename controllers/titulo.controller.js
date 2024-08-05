@@ -1,8 +1,9 @@
+//Importamos el modelo title y el operador
 const db = require("../database/models");
 const Title = db.title;
 const Op = db.Op;
 
-// Create and Save a new Book
+// Crea y guarda un nuevo titulo
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.nombre_titulo) {
@@ -12,7 +13,7 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Book
+  // Crea los titulos
   const title = {
     nombre_titulo: req.body.nombre_titulo,
     id_categoria: req.body.id_categoria,
@@ -21,7 +22,7 @@ exports.create = (req, res) => {
     calificacion : req.body.calificacion
   };
 
-  // Save Book in database
+  // Guarda los titulos en la bd
   Title.create(title)
     .then(data => {
       res.send(data);
@@ -33,7 +34,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Books from the database.
+// Recupera todos los títulos de la bd incluyendo las categorías, géneros y actores asociados a los títulos.
 exports.findAll = (req, res) => {
   //const title = req.query.title;
   //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
@@ -55,7 +56,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single Book with an id
+// Busca títulos por nombre incluyendo las categorías, géneros y actores asociados a esos títulos.
 exports.findName = (req, res) => {
   const nombre = req.params.nombre;
   var condition = nombre ? { nombre_titulo: { [Op.like]: `%${nombre}%` } } : null;
@@ -75,6 +76,7 @@ exports.findName = (req, res) => {
     });
 };
 
+//Esta función busca los títulos por categoría.
 exports.findCategory = (req, res) => {
 const categoria = parseInt(req.params.categoria); 
     Title.findAll({ where: {id_categoria: { [Op.eq]:  categoria} }})
@@ -90,7 +92,7 @@ const categoria = parseInt(req.params.categoria);
 
 
 
-// Update a Book by the id in the request
+// Actualiza un título en la bd con los datos proporcionados en la solicitud.
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -115,7 +117,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a Book with the specified id in the request
+// Elimina un título de la bd usando el ID proporcionado en la solicitud.
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -140,7 +142,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Books from the database.
+// Elimina todos los títulos de la bd.
 exports.deleteAll = (req, res) => {
   Title.destroy({
     where: {},
@@ -156,7 +158,7 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// Find all published Books
+// Busca todos los títulos los cuales tengan una calificación mayor que 5⭐⭐⭐⭐⭐.
 exports.findAllCalificacion = (req, res) => {
 
 var condition = { calificacion: { [Op.gt]: 5 } }; 

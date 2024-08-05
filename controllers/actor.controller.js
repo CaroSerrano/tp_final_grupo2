@@ -1,9 +1,10 @@
+//Importamos el modelo actor y el operador 
 const db = require("../database/models");
 const Actor = db.actor;
 const Op = db.Op;
 
 
-// Retrieve all Books from the database.
+// Recupera todoos los actores de la bd
 exports.findAll = (req, res) => {
    Actor.findAll()
     .then(data => {
@@ -16,7 +17,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-
+//Busca actores por nombre incluyendo los titulos asociados al actor
 exports.findName = (req, res) => {
   const nombre = req.params.nombre;
   var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;

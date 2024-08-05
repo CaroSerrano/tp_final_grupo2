@@ -1,8 +1,8 @@
 module.exports = (sequelize, Sequelize, DataTypes) => {
     const Title = sequelize.define(
-      "title", // Model name
+      "title", // Nombre del modelo
       {
-        // Model attributes
+        // Los atributos  define un campo en la tabla y especifica su tipo de datos
         id: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -26,7 +26,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         }
       },
       {
-        // Options
+        // Desactiva la creación automática de los campos createdAt y updatedAt
         timestamps: false,
       }
     );
