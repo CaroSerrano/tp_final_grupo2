@@ -3,26 +3,28 @@ module.exports = app => {
   
     const router = require("express").Router();
   
-    // Create a new Book
+    // Crear un nuevo título
     router.post("/", titleController.create);
   
-    // Retrieve all Books
+    // Mostrar todos los títulos
     router.get("/", titleController.findAll);
   
-    // Retrieve all published Books
+    // Mostrar todos los títulos con una calificación >5
     router.get("/calificacion", titleController.findAllCalificacion);
   
-    // Retrieve a single Book with id
+    // Mostrar el o los títulos cuyo nombre coincida con el especificado
     router.get("/:nombre", titleController.findName);
+
+    // Mostrar los títulos cuya categoría coincida con la especificada
     router.get("/categoria/:categoria", titleController.findCategory);
   
-    // Update a Book with id
+    // Actualizar un título mediante su id
     router.put("/:id", titleController.update);
   
-    // Delete a Book with id
+    // Eliminar un título mediante su id
     router.delete("/:id", titleController.delete);
   
-    // Delete all Books
+    // Eliminar todos lo títulos
     router.delete("/", titleController.deleteAll);
   
     app.use("/api/trailerflix", router);

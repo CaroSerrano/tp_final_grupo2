@@ -21,9 +21,9 @@ Este proyecto tiene como objetivo desarrollar una plataforma de streaming median
   - [Manejo de Errores](#manejo-de-errores)
 
 ## Integrantes del grupo de trabajo
-- Viviana Beatriz Aguilera Valenzuela 
-- Quimey Fernandez Yaryura
-- Paula Carolina Serrano
+- [Viviana Beatriz Aguilera Valenzuela]()
+- [Quimey Fernandez Yaryura]()
+- [Paula Carolina Serrano](https://www.linkedin.com/in/paula-carolina-serrano/)
 
 ## Configuraciones iniciales
 - Detalle de las variables de entorno del archivo .env:

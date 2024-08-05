@@ -1,8 +1,4 @@
 use trailerflix; 
-ALTER TABLE `trailerflix`.`actorestitulos` 
-DROP COLUMN `updatedAt`,
-DROP COLUMN `createdAt`;
-
 
 -- Inserción de categorías
 INSERT INTO categories (id, nombre_categoria) VALUES
@@ -20,7 +16,6 @@ INSERT INTO genres (id, nombre_genero) VALUES
 (7, 'Familia');
 
 -- Inserción de títulos
--- truncate titles;
 INSERT INTO titles (id, nombre_titulo, id_categoria, id_genero, temporadas, calificacion) VALUES
 (1, 'The Crown', 1, 3, 4, 6),
 (2, 'Riverdale', 1, 2, 5, 2),
@@ -39,7 +34,6 @@ INSERT INTO titles (id, nombre_titulo, id_categoria, id_genero, temporadas, cali
 (15, 'Chernobyl', 1, 3, 1, 4);
 
 -- Inserción de actores y relación con títulos
--- truncate actors;
 
 INSERT INTO actors (nombre, apellido)values 
 ('Pedro', 'Pascal'),
@@ -137,16 +131,7 @@ INSERT INTO actors (nombre, apellido)values
     ('Tony', 'Denison'),
     ('Michael Paul', 'Chan'),
     ('Raymond', 'Cruz');
--- Verifico que no haya repetidos
--- SELECT nombre, apellido, COUNT(*) 
--- FROM actors 
--- GROUP BY nombre, apellido 
--- HAVING COUNT(*) > 1;
 
-
--- Relación Actores-Títulos
--- truncate actorestitulos;
--- drop table actorestitulos;
 -- Insertar relaciones entre actores y títulos en la tabla ActoresTitulos
 INSERT INTO actorestitulos (id_actor, id_titulo)
 VALUES

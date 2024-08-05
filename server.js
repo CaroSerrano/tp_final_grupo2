@@ -4,10 +4,6 @@ const config = require("./config/config");
 
 const app = express();
 
-const corsOptions = {
-  origin: "http://localhost:"+ config.PORT
-};
-
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
@@ -15,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hi there, welcome to this tutorial." });
+  res.json({ message: "Bienvenid@ a la API del grupo 2!" });
 });
 
 // api routes

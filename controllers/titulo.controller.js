@@ -2,172 +2,201 @@ const db = require("../database/models");
 const Title = db.title;
 const Op = db.Op;
 
-// Create and Save a new Book
+// Crear y guardar un nuevo título
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.nombre_titulo) {
     res.status(400).send({
-      message: "Agregue datos para insertar"
+      message: "Agregue datos para insertar",
     });
     return;
   }
 
-  // Create a Book
+  // Datos del nuevo título
   const title = {
     nombre_titulo: req.body.nombre_titulo,
     id_categoria: req.body.id_categoria,
-    id_genero: req.body.id_genero, 
-    temporadas : req.body.temporadas, 
-    calificacion : req.body.calificacion
+    id_genero: req.body.id_genero,
+    temporadas: req.body.temporadas,
+    calificacion: req.body.calificacion,
   };
 
-  // Save Book in database
+  // Guardar el título en la BBDD
   Title.create(title)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "Ocurrio un error en la creacion del titulo"
+        message: err.message || "Ocurrió un error en la creación del título",
       });
     });
 };
 
-// Retrieve all Books from the database.
+// Muestra todos los títulos
 exports.findAll = (req, res) => {
-  //const title = req.query.title;
-  //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
-
-  Title.findAll({include: [{model: db.category, attributes: ['nombre_categoria']}
-                         , {model: db.genre, attributes: ['nombre_genero']}
-                         , {model: db.actor, attributes: ['nombre', 'apellido']
-                          
-                         }
-             ], attributes: ['nombre_titulo', 'temporadas', 'calificacion']})
-    .then(data => {
+  Title.findAll({
+    include: [
+      { model: db.category, attributes: ["nombre_categoria"] },
+      { model: db.genre, attributes: ["nombre_genero"] },
+      {
+        model: db.actor,
+        attributes: ["nombre", "apellido"],
+        through: { attributes: [] },
+      },
+    ],
+    attributes: ["nombre_titulo", "temporadas", "calificacion"],
+  })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "Ocurrio un error al mostrar los titulos"
+        message: err.message || "Ocurrió un error al mostrar los títulos",
       });
     });
 };
 
-// Find a single Book with an id
+// Busca uno o más títulos mediante el nombre
 exports.findName = (req, res) => {
   const nombre = req.params.nombre;
-  var condition = nombre ? { nombre_titulo: { [Op.like]: `%${nombre}%` } } : null;
-  Title.findAll({where:condition, include: [{model: db.category, attributes: ['nombre_categoria']}
-    , {model: db.genre, attributes: ['nombre_genero']}
-    , {model: db.actor, attributes: ['nombre', 'apellido']
-     
-    }
-], attributes: ['nombre_titulo', 'temporadas', 'calificacion']})
-    .then(data => {
+  var condition = nombre
+    ? { nombre_titulo: { [Op.like]: `%${nombre}%` } }
+    : null;
+  Title.findAll({
+    where: condition,
+    include: [
+      { model: db.category, attributes: ["nombre_categoria"] },
+      { model: db.genre, attributes: ["nombre_genero"] },
+      {
+        model: db.actor,
+        attributes: ["nombre", "apellido"],
+        through: { attributes: [] },
+      },
+    ],
+    attributes: ["nombre_titulo", "temporadas", "calificacion"],
+  })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: `Error en obtener el titulo = ${nombre}`
+        message: `Error en obtener el título = ${nombre}`,
       });
     });
 };
 
+//Buscar todos los títulos pertenecientes a la categoría indicada por parámetro (1: Series, 2: Películas)
 exports.findCategory = (req, res) => {
-const categoria = parseInt(req.params.categoria); 
-    Title.findAll({ where: {id_categoria: { [Op.eq]:  categoria} }})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: err.message || "Ocurrio un error"
-        });
+  const categoria = parseInt(req.params.categoria);
+  Title.findAll({
+    where: { id_categoria: { [Op.eq]: categoria } },
+    include: [
+      { model: db.category, attributes: ["nombre_categoria"] },
+      { model: db.genre, attributes: ["nombre_genero"] },
+      {
+        model: db.actor,
+        attributes: ["nombre", "apellido"],
+        through: { attributes: [] },
+      },
+    ],
+    attributes: ["nombre_titulo", "temporadas", "calificacion"],
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Ocurrió un error",
       });
-  };
+    });
+};
 
-
-
-// Update a Book by the id in the request
+// Actualiza un título mediante su id
 exports.update = (req, res) => {
   const id = req.params.id;
 
   Title.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "El titulo de la serie fue actualizado"
+          message: "El título fue actualizado",
         });
       } else {
         res.send({
-          message: `No se puede actualizar la serie con el id=${id}!`
+          message: `No se puede actualizar el título con el id=${id}!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error al actualizar la serie con id=" + id
+        message: "Error al actualizar el título con id=" + id,
       });
     });
 };
 
-// Delete a Book with the specified id in the request
+// Elimina un título mediante su id
 exports.delete = (req, res) => {
   const id = req.params.id;
 
   Title.destroy({
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Se elimino el titulo correctamente!"
+          message: "Se eliminó el título correctamente!",
         });
       } else {
         res.send({
-          message: `No se pudo eliminar el titulo con id=${id}.!`
+          message: `No se pudo eliminar el título con id=${id}.!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "No se pudo eliminar el titulo con id=" + id
+        message: "No se pudo eliminar el título con id=" + id,
       });
     });
 };
 
-// Delete all Books from the database.
+// Elimina todos los títulos de la BBDD
 exports.deleteAll = (req, res) => {
   Title.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then(nums => {
-      res.send({ message: `${nums} Titulos se borraron exitosamente!` });
+    .then((nums) => {
+      res.send({ message: `${nums} Títulos se borraron exitosamente!` });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "No se pudieron borrar los titulos."
+        message: err.message || "No se pudieron borrar los títulos.",
       });
     });
 };
 
-// Find all published Books
+// Buscar todos los títulos con una calificación > 5, ordenados de forma descendente
 exports.findAllCalificacion = (req, res) => {
+  let condition = { calificacion: { [Op.gt]: 5 } };
 
-var condition = { calificacion: { [Op.gt]: 5 } }; 
-
-  Title.findAll({ where: condition })
-    .then(data => {
+  Title.findAll({
+    where: condition,
+    order: [["calificacion", "DESC"]],
+    attributes: ["nombre_titulo", "calificacion"],
+    include: [
+      { model: db.category, attributes: ["nombre_categoria"] },
+      { model: db.genre, attributes: ["nombre_genero"] },
+    ],
+  })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "Ocurrio un error"
+        message: err.message || "Ocurrió un error",
       });
     });
 };

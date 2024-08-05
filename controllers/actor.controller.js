@@ -2,34 +2,48 @@ const db = require("../database/models");
 const Actor = db.actor;
 const Op = db.Op;
 
-
-// Retrieve all Books from the database.
+// Muestra todos los actores
 exports.findAll = (req, res) => {
-   Actor.findAll()
-    .then(data => {
+  Actor.findAll()
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "Ocurrio un error al mostrar los actores"
+        message: err.message || "Ocurrió un error al mostrar los actores",
       });
     });
 };
 
-
+//Muestra un actor y todos los títulos en los que trabajó, buscando mediante su nombre o apellido.
 exports.findName = (req, res) => {
   const nombre = req.params.nombre;
-  var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
-  Actor.findAll({where:condition, include: [{model: db.title, attributes: ['nombre_titulo']}
-    
-], attributes: ['nombre', 'apellido']})
-    .then(data => {
+  let condition = nombre
+    ? {
+        [Op.or]: [
+          { nombre: { [Op.like]: `%${nombre}%` } },
+          { apellido: { [Op.like]: `%${nombre}%` } },
+        ],
+      }
+    : null;
+
+  Actor.findAll({
+    where: condition,
+    include: [
+      {
+        model: db.title,
+        attributes: ["nombre_titulo"],
+        through: { attributes: [] },
+      },
+    ],
+    attributes: ["nombre", "apellido"],
+  })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: `Error en obtener el actor = ${nombre}`
+        message: `Error en obtener el actor = ${nombre}`,
       });
     });
 };
-

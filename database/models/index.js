@@ -18,29 +18,27 @@ const db = {};
 db.Sequelize = Sequelize;
 db.Op = Op;
 db.sequelize = sequelize;
+
 // incializo las tablas
 db.title = require("./titulo.model.js")(sequelize, Sequelize, DataTypes);
 db.category = require("./categoria.model.js")(sequelize, Sequelize, DataTypes);
 db.actor = require("./actores.model.js")(sequelize, Sequelize, DataTypes);
 db.genre = require("./genero.model.js")(sequelize, Sequelize, DataTypes);
-// relaciones genero una tabla aux 
+
+// relaciones. genero una tabla aux 
 db.title.belongsToMany(db.actor, {
     through: {
         model: 'ActoresTitulos',
-         // Desactiva las columnas createdAt y updatedAt
-      },
+    },
     foreignKey: 'id_titulo',
     otherKey: 'id_actor', 
-    timestamps: false
+    timestamps: false // Desactiva las columnas createdAt y updatedAt
 });
-
-
 
 db.actor.belongsToMany(db.title, {
     through: {
         model: 'ActoresTitulos',
-        // Desactiva las columnas createdAt y updatedAt
-      },
+    },
     foreignKey: 'id_actor',
     otherKey: 'id_titulo', 
     timestamps: false 
